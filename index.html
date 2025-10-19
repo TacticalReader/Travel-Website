@@ -17,6 +17,77 @@
     <!-- custom js file link  -->
     <script src="script.js" defer></script>
 
+    <style>
+        /* Custom styles for JS features */
+        :root {
+            --main-color: #29d9d5;
+            --white: #fff;
+            --light-bg: #f7f7f7;
+            --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+        }
+
+        .header.active {
+            background: var(--white);
+            box-shadow: var(--box-shadow);
+            border-bottom: 0;
+        }
+
+        #menu-btn.fa-times {
+            transform: rotate(180deg);
+        }
+
+        .navbar a.active {
+            color: var(--main-color);
+        }
+
+        @media (max-width: 991px) {
+            .navbar {
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: var(--white);
+                border-top: .1rem solid rgba(0,0,0,.2);
+                padding: 1rem 2rem;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: .2s linear;
+            }
+            .navbar.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            .navbar a.active {
+                border-bottom: .2rem solid var(--main-color);
+                padding-bottom: .5rem;
+            }
+        }
+
+        .about .controls .control-btn.active {
+            background: var(--main-color);
+        }
+
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--main-color);
+            color: var(--white);
+            height: 4.5rem;
+            width: 4.5rem;
+            line-height: 4.5rem;
+            text-align: center;
+            font-size: 2rem;
+            border-radius: .5rem;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: .3s linear;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .scroll-top-btn.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
 </head>
 <body>
     
@@ -525,6 +596,96 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const menuBtn = document.querySelector('#menu-btn');
+    const navbar = document.querySelector('.header .navbar');
+    const header = document.querySelector('.header');
+    const scrollTopBtn = document.querySelector('.scroll-top-btn');
+
+    // Mobile menu toggle
+    menuBtn.onclick = () => {
+        menuBtn.classList.toggle('fa-times');
+        navbar.classList.toggle('active');
+    };
+
+    // Window scroll events
+    window.onscroll = () => {
+        menuBtn.classList.remove('fa-times');
+        navbar.classList.remove('active');
+
+        // Sticky header
+        if (window.scrollY > 0) {
+            header.classList.add('active');
+        } else {
+            header.classList.remove('active');
+        }
+
+        // Scroll top button visibility
+        if (window.scrollY > 250) {
+            scrollTopBtn.classList.add('active');
+        } else {
+            scrollTopBtn.classList.remove('active');
+        }
+
+        // Active nav link on scroll
+        document.querySelectorAll('section[id]').forEach(sec => {
+            let top = window.scrollY;
+            let offset = sec.offsetTop - 150;
+            let height = sec.offsetHeight;
+            let id = sec.getAttribute('id');
+
+            if (top >= offset && top < offset + height) {
+                document.querySelectorAll('.navbar a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') == '#' + id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    };
+
+    // Video controls
+    document.querySelectorAll('.about .controls .control-btn').forEach(btn => {
+        btn.onclick = () => {
+            let src = btn.getAttribute('data-src');
+            document.querySelector('.about .video-container .video').src = src;
+            // Manage active state for buttons
+            document.querySelectorAll('.about .controls .control-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        };
+    });
+    // Set initial active video button
+    const firstVideoBtn = document.querySelector('.about .controls .control-btn');
+    if(firstVideoBtn) {
+        firstVideoBtn.classList.add('active');
+    }
+
+    // Form submission handling
+    const bookingForm = document.getElementById('booking-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Booking request submitted! We will get back to you shortly.');
+            bookingForm.reset();
+        });
+    }
+
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+            alert(`Thank you for subscribing, ${email}!`);
+            newsletterForm.reset();
+        });
+    }
+
+});
+</script>
 
 <script>
 
