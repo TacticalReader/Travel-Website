@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (menuBtn && navbar) {
                 menuBtn.onclick = () => {
+                    menuBtn.classList.toggle('fa-times');
                     navbar.classList.toggle('active');
                 };
             }
@@ -40,7 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close mobile menu when a nav link is clicked
             document.querySelectorAll('.header .navbar a').forEach(link => {
                 link.onclick = () => {
-                    if (navbar) navbar.classList.remove('active');
+                    if (navbar) {
+                        navbar.classList.remove('active');
+                        menuBtn.classList.remove('fa-times');
+                    }
                 };
             });
         },
@@ -48,11 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initScrollEffects() {
             const header = document.querySelector('.header');
             const scrollTopBtn = document.querySelector('.scroll-top-btn');
-            const navbar = document.querySelector('.header .navbar');
 
             window.onscroll = () => {
-                if (navbar) navbar.classList.remove('active');
-
                 if (header) {
                     header.classList.toggle('scrolled', window.scrollY > 0);
                 }
@@ -64,15 +65,34 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         initVideoSwitcher() {
-            document.querySelectorAll('.about .video-container .controls .control-btn').forEach(btn => {
-                btn.onclick = () => {
-                    const src = btn.getAttribute('data-src');
-                    const videoPlayer = document.querySelector('.about .video-container .video');
-                    if (src && videoPlayer) {
-                        videoPlayer.src = src;
+            const controlBtns = document.querySelectorAll('.about .controls .control-btn');
+            const videoPlayer = document.querySelector('.about .video-container .video');
+
+            if (!controlBtns.length || !videoPlayer) return;
+
+            const activateButton = (btn) => {
+                const src = btn.getAttribute('data-src');
+                if (src) {
+                    videoPlayer.src = src;
+                    controlBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+            };
+
+            controlBtns.forEach(btn => {
+                btn.addEventListener('click', () => activateButton(btn));
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        activateButton(btn);
                     }
-                };
+                });
             });
+
+            // Set the first button as active initially
+            if (controlBtns.length > 0) {
+                controlBtns[0].classList.add('active');
+            }
         },
 
         initActiveLinkObserver() {
@@ -182,11 +202,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!sliderContainer || !prevBtn || !nextBtn) return;
 
             const slides = Array.from(sliderContainer.children);
-            const slideWidth = slides[0].offsetWidth + parseFloat(getComputedStyle(slides[0]).marginRight) * 2; // Including gap
+            if (slides.length === 0) return;
+
             let currentIndex = 0;
 
             const updateSliderPosition = () => {
-                sliderContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                const slideWidth = slides[0].offsetWidth;
+                const gap = parseFloat(getComputedStyle(sliderContainer).gap) || 0;
+                sliderContainer.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
             };
 
             nextBtn.addEventListener('click', () => {
@@ -200,10 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Adjust on window resize
-            window.addEventListener('resize', () => {
-                const newSlideWidth = slides[0].offsetWidth + parseFloat(getComputedStyle(slides[0]).marginRight) * 2;
-                sliderContainer.style.transform = `translateX(-${currentIndex * newSlideWidth}px)`;
-            });
+            window.addEventListener('resize', updateSliderPosition);
+            updateSliderPosition(); // Initial position
         },
 
         initGalleryLightbox() {
