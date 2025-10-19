@@ -23,6 +23,11 @@
     transition: all .2s linear;
 }
 
+*:focus-visible {
+    outline: .2rem solid var(--primary-color);
+    outline-offset: .2rem;
+}
+
 html {
     font-size: 62.5%;
     overflow-x: hidden;
@@ -252,7 +257,7 @@ section {
     padding: 2rem 0;
 }
 
-.about .video-container .controls span {
+.about .video-container .controls .control-btn {
     display: inline-block;
     height: 2rem;
     width: 2rem;
@@ -262,8 +267,8 @@ section {
     margin: .7rem;
 }
 
-.about .video-container .controls span:hover, 
-.about .video-container .controls span.active {
+.about .video-container .controls .control-btn:hover, 
+.about .video-container .controls .control-btn.active {
     background: var(--primary-color);
 }
 
@@ -609,7 +614,6 @@ section {
     background-size: cover;
     background-position: center;
     padding: 3rem 2rem;
-    background-attachment: fixed;
     text-align: center;
 }
 
