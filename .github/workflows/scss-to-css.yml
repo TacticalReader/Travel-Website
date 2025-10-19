@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Grants write access for pushing to gh-pages
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,12 +21,14 @@ jobs:
         run: npm install --save-dev sass
       - name: Compile SCSS to CSS
         run: |
-          npx sass style.scss style.css || exit 1
-          ls -la  # Log files for debugging
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+          npx sass style.scss style.css
+          ls -la
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .  # Deploys from root; adjust to 'Travel-Website' if needed
-          keep_files: false  # Ensures clean deployment
-          destination_dir: Travel-Website  # Aligns with URL structure
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
