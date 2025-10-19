@@ -7,7 +7,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write  # Grants write access for pushing to gh-pages
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -26,5 +26,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: Travel-Website  # Deploy from the Travel-Website subdirectory
-          keep_files: false
+          publish_dir: Travel-Website  # Deploy contents of Travel-Website/ folder
+          keep_files: false  # Ensure clean deployment
+      - name: Log Deployed Files
+        run: |
+          ls -la Travel-Website  # Log deployed files for verification
