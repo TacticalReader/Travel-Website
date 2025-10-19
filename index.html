@@ -21,11 +21,11 @@
 
 <header class="header">
 
-    <div id="menu-btn" class="fas fa-bars"></div>
+    <button id="menu-btn" class="fas fa-bars" aria-label="Open menu" aria-controls="navbar" aria-expanded="false"></button>
 
     <a data-aos="zoom-in-left" data-aos-delay="150" href="#home" class="logo"> <i class="fas fa-paper-plane"></i>travel </a>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <a data-aos="zoom-in-left" data-aos-delay="300" href="#home">home</a>
         <a data-aos="zoom-in-left" data-aos-delay="450" href="#about">about</a>
         <a data-aos="zoom-in-left" data-aos-delay="600" href="#destination">destination</a>
@@ -86,7 +86,7 @@
 
     <div class="video-container" data-aos="fade-right" data-aos-delay="300">
         <video src="images/about-vid-1.mp4" muted autoplay loop class="video"></video>
-        <div class="controls">
+        <div class="controls" role="group" aria-label="Video selection controls">
             <button class="control-btn" data-src="images/about-vid-1.mp4" aria-label="Play video 1"></button>
             <button class="control-btn" data-src="images/about-vid-2.mp4" aria-label="Play video 2"></button>
             <button class="control-btn" data-src="images/about-vid-3.mp4" aria-label="Play video 3"></button>
@@ -273,55 +273,55 @@
     
     <div class="box-container">
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Iceland">
             <img src="images/gallery-img-1.jpg" alt="Travel photo of Iceland" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>iceland</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Greenland">
             <img src="images/gallery-img-2.jpg" alt="Travel photo of Greenland" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>greenland</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Alaska">
             <img src="images/gallery-img-3.jpg" alt="Travel photo of Alaska" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>alaska</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Thailand">
             <img src="images/gallery-img-4.jpg" alt="Travel photo of Thailand" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>thailand</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Brazil">
             <img src="images/gallery-img-5.jpg" alt="Travel photo of Brazil" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>brazil</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Maldives">
             <img src="images/gallery-img-6.jpg" alt="Travel photo of Maldives" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>maldive</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Iceland">
             <img src="images/gallery-img-7.jpg" alt="Travel photo of Iceland" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>iceland</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Alaska">
             <img src="images/gallery-img-8.jpg" alt="Travel photo of Alaska" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>alaska</h3>
         </div>
 
-        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Maldives">
             <img src="images/gallery-img-9.jpg" alt="Travel photo of Maldives" loading="lazy">
             <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
             <h3>maldive</h3>
@@ -482,10 +482,10 @@
             <a href="#home" class="logo"> <i class="fas fa-paper-plane"></i>travel </a>
             <p>Your trusted travel companion for unforgettable adventures and seamless journeys worldwide.</p>
             <div class="share">
-                <a href="#" class="fab fa-facebook-f" aria-label="Facebook" rel="noopener noreferrer"></a>
-                <a href="#" class="fab fa-twitter" aria-label="Twitter" rel="noopener noreferrer"></a>
-                <a href="#" class="fab fa-instagram" aria-label="Instagram" rel="noopener noreferrer"></a>
-                <a href="#" class="fab fa-linkedin" aria-label="LinkedIn" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-facebook-f" aria-label="Facebook" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-twitter" aria-label="Twitter" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"></a>
             </div>
         </div>
 
@@ -529,8 +529,9 @@
 <a href="#home" class="scroll-top-btn fas fa-arrow-up"></a>
 
 <!-- gallery lightbox -->
-<div class="lightbox" id="lightbox">
-    <span class="close-btn">&times;</span>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-heading">
+    <h2 id="lightbox-heading" class="visually-hidden">Image Gallery</h2>
+    <span class="close-btn" role="button" tabindex="0" aria-label="Close gallery">&times;</span>
     <img src="" alt="Enlarged gallery image" class="lightbox-content" id="lightbox-img">
 </div>
 
