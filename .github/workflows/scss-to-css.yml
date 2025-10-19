@@ -1,34 +1,18 @@
-name: Compile SCSS to CSS
-
+name: Build and Deploy
 on:
   push:
-    branches:
-      - main
-
+    branches: [ main ]
 jobs:
-  compile-scss:
+  build:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Install Sass
-        run: npm install -g sass
-        
-      - name: Compile SCSS to CSS
-        run: sass style.scss style.css
-        
-      - name: Check for changes
-        id: check_changes
-        run: |
-          git diff --quiet style.css || echo "changed=true" >> $GITHUB_OUTPUT
-          
-      - name: Commit and push changes
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add style.css
-          git commit -m "Auto-compile SCSS to CSS"
-          git push
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm install sass
+      - run: npx sass style.scss style.css
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
