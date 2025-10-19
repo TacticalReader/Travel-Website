@@ -7,21 +7,24 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Grants write access for pushing to gh-pages branch
+      contents: write
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4  # Updated to latest version
+        uses: actions/checkout@v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4  # Updated to latest version
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
       - name: Install Sass
         run: npm install --save-dev sass
       - name: Compile SCSS to CSS
-        run: npx sass style.scss style.css
+        run: |
+          cd Travel-Website
+          npx sass style.scss style.css || exit 1
+          ls -la  # Log files for debugging
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4  # Updated to latest version
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .  # Publishes files from the root directory
-          keep_files: false  # Ensures a clean deployment
+          publish_dir: Travel-Website  # Deploy from the Travel-Website subdirectory
+          keep_files: false
