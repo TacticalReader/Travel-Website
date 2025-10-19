@@ -85,6 +85,12 @@ section {
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 9%;
+    transition: background-color .3s ease;
+}
+
+.header.scrolled {
+    background: #111;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.3);
 }
 
 .header .navbar a {
@@ -94,15 +100,9 @@ section {
     margin: 0 1rem;
 }
 
-.header .navbar a:hover {
+.header .navbar a:hover,
+.header .navbar a.active {
     color: #29d9d5;
-}
-
-.header .navbar a:active {
-    color: #29d9d5;
-    background-color: rgba(17, 17, 17, .7);
-    border: .2rem solid #29d9d5;
-    border-radius: 12px;
 }
 
 .header .btn {
