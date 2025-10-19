@@ -138,6 +138,10 @@ section {
     display: none;
 }
 
+#menu-btn.fa-times {
+    transform: rotate(180deg);
+}
+
 .home {
     margin: 0 auto;
     margin-top: 9rem;
@@ -258,7 +262,8 @@ section {
     margin: .7rem;
 }
 
-.about .video-container .controls span:hover {
+.about .video-container .controls span:hover, 
+.about .video-container .controls span.active {
     background: var(--primary-color);
 }
 
@@ -453,7 +458,7 @@ section {
     position: relative;
 }
 
-.review .review-slider .slider-wrapper {
+.review .slider-wrapper {
     overflow: hidden;
 }
 
@@ -751,11 +756,13 @@ section {
     border-radius: 50%;
     z-index: 1000;
     cursor: pointer;
+    opacity: 0;
     transform: translateY(10rem);
-    transition: transform .3s ease-out;
+    transition: all .3s ease-out;
 }
 
 .scroll-top-btn.active {
+    opacity: 1;
     transform: translateY(0);
 }
 
@@ -776,6 +783,7 @@ section {
 
 .form-message.visible {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .form-message.success {
@@ -858,11 +866,12 @@ section {
 
     .header .navbar {
         position: absolute;
-        top: 99%;
+        top: 100%;
         left: 0;
         right: 0;
         background: var(--dark-alt-color);
         clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: .2s linear;
     }
 
     .header .navbar.active {
@@ -888,7 +897,6 @@ section {
     }
 
     .review .box-container {
-        flex-wrap: wrap;
         transform: none !important;
     }
 
