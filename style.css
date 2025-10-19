@@ -902,6 +902,7 @@ section {
 
     .review .box-container {
         transform: none !important;
+        flex-direction: column;
     }
 
     .review .slider-controls {
