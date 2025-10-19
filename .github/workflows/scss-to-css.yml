@@ -19,15 +19,12 @@ jobs:
         run: npm install --save-dev sass
       - name: Compile SCSS to CSS
         run: |
-          cd Travel-Website
           npx sass style.scss style.css || exit 1
           ls -la  # Log files for debugging
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: Travel-Website  # Deploy contents of Travel-Website/ folder
-          keep_files: false  # Ensure clean deployment
-      - name: Log Deployed Files
-        run: |
-          ls -la Travel-Website  # Log deployed files for verification
+          publish_dir: .  # Deploys from root; adjust to 'Travel-Website' if needed
+          keep_files: false  # Ensures clean deployment
+          destination_dir: Travel-Website  # Aligns with URL structure
