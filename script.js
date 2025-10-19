@@ -2,6 +2,20 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Utility to throttle function execution
+    const throttle = (func, limit) => {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        }
+    };
+
     // Initialize all interactive components
     const app = {
         init() {
@@ -53,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const header = document.querySelector('.header');
             const scrollTopBtn = document.querySelector('.scroll-top-btn');
 
-            window.onscroll = () => {
+            const handleScroll = () => {
                 if (header) {
                     header.classList.toggle('scrolled', window.scrollY > 0);
                 }
@@ -62,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     scrollTopBtn.classList.toggle('active', window.scrollY > 250);
                 }
             };
+
+            window.addEventListener('scroll', throttle(handleScroll, 100));
         },
 
         initVideoSwitcher() {
@@ -81,12 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             controlBtns.forEach(btn => {
                 btn.addEventListener('click', () => activateButton(btn));
-                btn.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        activateButton(btn);
-                    }
-                });
             });
 
             // Set the first button as active initially
@@ -195,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         initReviewSlider() {
+            const slider = document.querySelector('.review .review-slider');
             const sliderContainer = document.querySelector('.review .box-container');
             const prevBtn = document.querySelector('#prev-review');
             const nextBtn = document.querySelector('#next-review');
@@ -205,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (slides.length === 0) return;
 
             let currentIndex = 0;
+            let autoPlayInterval;
 
             const updateSliderPosition = () => {
                 const slideWidth = slides[0].offsetWidth;
@@ -212,19 +224,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 sliderContainer.style.transform = `translateX(-${currentIndex * (slideWidth + gap)}px)`;
             };
 
-            nextBtn.addEventListener('click', () => {
+            const nextSlide = () => {
                 currentIndex = (currentIndex + 1) % slides.length;
                 updateSliderPosition();
-            });
+            };
 
-            prevBtn.addEventListener('click', () => {
+            const prevSlide = () => {
                 currentIndex = (currentIndex - 1 + slides.length) % slides.length;
                 updateSliderPosition();
-            });
+            };
 
-            // Adjust on window resize
+            const startAutoPlay = () => {
+                stopAutoPlay(); // Prevent multiple intervals
+                autoPlayInterval = setInterval(nextSlide, 5000);
+            };
+
+            const stopAutoPlay = () => {
+                clearInterval(autoPlayInterval);
+            };
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            slider.addEventListener('mouseenter', stopAutoPlay);
+            slider.addEventListener('mouseleave', startAutoPlay);
+
             window.addEventListener('resize', updateSliderPosition);
-            updateSliderPosition(); // Initial position
+            updateSliderPosition();
+            startAutoPlay();
         },
 
         initGalleryLightbox() {
@@ -233,21 +260,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const galleryItems = document.querySelectorAll('.gallery .box');
             const closeBtn = document.querySelector('.lightbox .close-btn');
 
-            if (!lightbox || !lightboxImg || !closeBtn) return;
+            if (!lightbox || !lightboxImg || !closeBtn || galleryItems.length === 0) return;
 
-            galleryItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const img = item.querySelector('img');
-                    if (img) {
-                        lightbox.classList.add('active');
-                        lightboxImg.src = img.src;
-                    }
-                });
-            });
+            const galleryImageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
+            let currentImageIndex = 0;
+
+            const openLightbox = (index) => {
+                currentImageIndex = index;
+                lightboxImg.src = galleryImageSources[currentImageIndex];
+                lightbox.classList.add('active');
+                document.addEventListener('keydown', handleKeydown);
+            };
 
             const closeLightbox = () => {
                 lightbox.classList.remove('active');
+                document.removeEventListener('keydown', handleKeydown);
             };
+
+            const showNextImage = () => {
+                currentImageIndex = (currentImageIndex + 1) % galleryImageSources.length;
+                lightboxImg.src = galleryImageSources[currentImageIndex];
+            };
+
+            const showPrevImage = () => {
+                currentImageIndex = (currentImageIndex - 1 + galleryImageSources.length) % galleryImageSources.length;
+                lightboxImg.src = galleryImageSources[currentImageIndex];
+            };
+
+            const handleKeydown = (e) => {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNextImage();
+                if (e.key === 'ArrowLeft') showPrevImage();
+            };
+
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => openLightbox(index));
+            });
 
             closeBtn.addEventListener('click', closeLightbox);
             lightbox.addEventListener('click', (e) => {
