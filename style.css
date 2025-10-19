@@ -6,7 +6,6 @@
     --dark-alt-color: #222;
     --light-color: #fff;
     --light-alt-color: #aaa;
-    --success-color: #28a745;
     --error-color: #dc3545;
     --border: .2rem solid var(--primary-color);
 }
@@ -812,8 +811,8 @@ section {
 }
 
 .form-message.success {
-    background-color: var(--success-color);
-    color: var(--light-color);
+    background-color: var(--primary-color);
+    color: var(--dark-color);
 }
 
 .form-message.error {
