@@ -57,6 +57,18 @@ section {
     padding: 3.1rem 9%;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .heading {
     text-align: center;
     margin-bottom: 2rem;
@@ -141,6 +153,8 @@ section {
     color: var(--light-color);
     cursor: pointer;
     display: none;
+    background: transparent;
+    border: none;
 }
 
 #menu-btn.fa-times {
@@ -403,6 +417,12 @@ section {
     cursor: pointer;
 }
 
+.gallery .box-container .box:focus-visible {
+    outline: .2rem solid var(--primary-color);
+    outline-offset: .2rem;
+    border-radius: 1rem;
+}
+
 .gallery .box-container .box img {
     width: 100%;
     border-radius: 1rem;
@@ -465,6 +485,7 @@ section {
 
 .review .slider-wrapper {
     overflow: hidden;
+    touch-action: pan-y;
 }
 
 .review .box-container {
