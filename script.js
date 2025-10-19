@@ -47,17 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (menuBtn && navbar) {
                 menuBtn.onclick = () => {
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
                     menuBtn.classList.toggle('fa-times');
                     navbar.classList.toggle('active');
+                    menuBtn.setAttribute('aria-expanded', !isExpanded);
+                    menuBtn.setAttribute('aria-label', isExpanded ? 'Open menu' : 'Close menu');
                 };
             }
 
             // Close mobile menu when a nav link is clicked
             document.querySelectorAll('.header .navbar a').forEach(link => {
                 link.onclick = () => {
-                    if (navbar) {
+                    if (navbar && navbar.classList.contains('active')) {
                         navbar.classList.remove('active');
                         menuBtn.classList.remove('fa-times');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                        menuBtn.setAttribute('aria-label', 'Open menu');
                     }
                 };
             });
@@ -217,6 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let currentIndex = 0;
             let autoPlayInterval;
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeThreshold = 50; // Min pixels for a swipe
 
             const updateSliderPosition = () => {
                 const slideWidth = slides[0].offsetWidth;
@@ -243,13 +251,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(autoPlayInterval);
             };
 
+            const handleTouchStart = (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoPlay();
+            };
+
+            const handleTouchEnd = (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+                startAutoPlay();
+            };
+
+            const handleSwipe = () => {
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    nextSlide();
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    prevSlide();
+                }
+            };
+
             nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
 
             slider.addEventListener('mouseenter', stopAutoPlay);
             slider.addEventListener('mouseleave', startAutoPlay);
 
-            window.addEventListener('resize', updateSliderPosition);
+            sliderContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+            sliderContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            window.addEventListener('resize', throttle(updateSliderPosition, 200));
             updateSliderPosition();
             startAutoPlay();
         },
@@ -264,17 +295,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const galleryImageSources = Array.from(galleryItems).map(item => item.querySelector('img').src);
             let currentImageIndex = 0;
+            let lastFocusedElement;
 
             const openLightbox = (index) => {
+                lastFocusedElement = document.activeElement;
                 currentImageIndex = index;
                 lightboxImg.src = galleryImageSources[currentImageIndex];
                 lightbox.classList.add('active');
                 document.addEventListener('keydown', handleKeydown);
+                trapFocus();
             };
 
             const closeLightbox = () => {
                 lightbox.classList.remove('active');
                 document.removeEventListener('keydown', handleKeydown);
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
             };
 
             const showNextImage = () => {
@@ -287,6 +324,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 lightboxImg.src = galleryImageSources[currentImageIndex];
             };
 
+            const trapFocus = () => {
+                const focusableElements = lightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstFocusable = focusableElements[0];
+                const lastFocusable = focusableElements[focusableElements.length - 1];
+                firstFocusable.focus();
+
+                lightbox.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Tab') return;
+
+                    if (e.shiftKey) { // Shift + Tab
+                        if (document.activeElement === firstFocusable) {
+                            lastFocusable.focus();
+                            e.preventDefault();
+                        }
+                    } else { // Tab
+                        if (document.activeElement === lastFocusable) {
+                            firstFocusable.focus();
+                            e.preventDefault();
+                        }
+                    }
+                });
+            };
+
             const handleKeydown = (e) => {
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowRight') showNextImage();
@@ -295,6 +355,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             galleryItems.forEach((item, index) => {
                 item.addEventListener('click', () => openLightbox(index));
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(index);
+                    }
+                });
             });
 
             closeBtn.addEventListener('click', closeLightbox);
