@@ -1,18 +1,27 @@
-name: Build and Deploy
+name: Build and Deploy to GitHub Pages
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Grants write access for pushing to gh-pages branch
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Updated to latest version
+      - name: Set up Node.js
+        uses: actions/setup-node@v4  # Updated to latest version
         with:
           node-version: '20'
-      - run: npm install sass
-      - run: npx sass style.scss style.css
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Install Sass
+        run: npm install --save-dev sass
+      - name: Compile SCSS to CSS
+        run: npx sass style.scss style.css
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4  # Updated to latest version
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: .  # Publishes files from the root directory
+          keep_files: false  # Ensures a clean deployment
