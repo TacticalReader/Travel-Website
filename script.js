@@ -1,3 +1,471 @@
+const templates = {
+    createHeader() {
+        return `
+<header class="header">
+    <button id="menu-btn" class="fas fa-bars" aria-label="Open menu" aria-controls="navbar" aria-expanded="false"></button>
+    <a data-aos="zoom-in-left" data-aos-delay="150" href="#home" class="logo"> <i class="fas fa-paper-plane"></i>travel </a>
+    <nav class="navbar" id="navbar">
+        <a data-aos="zoom-in-left" data-aos-delay="300" href="#home">home</a>
+        <a data-aos="zoom-in-left" data-aos-delay="450" href="#about">about</a>
+        <a data-aos="zoom-in-left" data-aos-delay="600" href="#destination">destination</a>
+        <a data-aos="zoom-in-left" data-aos-delay="750" href="#services">services</a>
+        <a data-aos="zoom-in-left" data-aos-delay="900" href="#gallery">gallery</a>
+        <a data-aos="zoom-in-left" data-aos-delay="1150" href="#blogs">blogs</a>
+    </nav>
+    <a data-aos="zoom-in-left" data-aos-delay="1300" href="#book-form" class="btn">book now</a>
+</header>`;
+    },
+
+    createHome() {
+        return `
+<section class="home" id="home">
+    <div class="content">
+        <span data-aos="fade-up" data-aos-delay="150">follow us</span>
+        <h3 data-aos="fade-up" data-aos-delay="300">to the unknown</h3>
+        <p data-aos="fade-up" data-aos-delay="450">Discover breathtaking destinations and create unforgettable memories with our expertly crafted travel experiences. From exotic beaches to mountain peaks, adventure awaits at every corner of the world.</p>
+        <a data-aos="fade-up" data-aos-delay="600" href="#book-form" class="btn">book now</a>
+    </div>
+</section>`;
+    },
+
+    createBookingForm() {
+        return `
+<section class="book-form" id="book-form">
+    <form action="" id="booking-form">
+        <div data-aos="zoom-in" data-aos-delay="150" class="inputBox">
+            <span><i class="fas fa-map-marker-alt"></i> where to?</span>
+            <input type="text" placeholder="place name" required>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="300" class="inputBox">
+            <span><i class="fas fa-calendar-alt"></i> when?</span>
+            <input type="date" required>
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="450" class="inputBox">
+            <span><i class="fas fa-users"></i> how many?</span>
+            <input type="number" placeholder="number of travelers" min="1" required>
+        </div>
+        <input data-aos="zoom-in" data-aos-delay="600" type="submit" value="find now" class="btn">
+        <div class="form-message"></div>
+    </form>
+</section>`;
+    },
+    
+    createAbout() {
+        return `
+<section class="about" id="about">
+    <div class="video-container" data-aos="fade-right" data-aos-delay="300">
+        <video src="images/about-vid-1.mp4" muted autoplay loop class="video"></video>
+        <div class="controls" role="group" aria-label="Video selection controls">
+            <button class="control-btn" data-src="images/about-vid-1.mp4" aria-label="Play video 1"></button>
+            <button class="control-btn" data-src="images/about-vid-2.mp4" aria-label="Play video 2"></button>
+            <button class="control-btn" data-src="images/about-vid-3.mp4" aria-label="Play video 3"></button>
+        </div>
+    </div>
+    <div class="content" data-aos="fade-left" data-aos-delay="600">
+        <span>why choose us?</span>
+        <h3>Nature's Majesty Awaits You</h3>
+        <p>We offer personalized travel experiences with expert local guides, premium accommodations, and carefully curated itineraries. Your safety and satisfaction are our top priorities on every adventure.</p>
+        <a href="#" class="btn">read more <i class="fas fa-info-circle"></i></a>
+    </div>
+</section>`;
+    },
+
+    createDestination() {
+        return `
+<section class="destination" id="destination">
+    <div class="heading">
+        <span>our destination</span>
+        <h1>make yours destination</h1>
+    </div>
+    <div class="box-container">
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <div class="image">
+                <img src="images/des-1.jpg" alt="Mountain landscape" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Mountain Adventures</h3>
+                <p>Experience breathtaking mountain landscapes and thrilling hiking trails.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <div class="image">
+                <img src="images/des-2.jpg" alt="Pristine beach" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Beach Paradise</h3>
+                <p>Relax on pristine beaches with crystal-clear waters and golden sand.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <div class="image">
+                <img src="images/des-3.jpg" alt="Ancient temple" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Cultural Tours</h3>
+                <p>Discover rich heritage and immerse yourself in local traditions.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="600">
+            <div class="image">
+                <img src="images/des-4.jpg" alt="Modern cityscape" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>City Exploration</h3>
+                <p>Navigate vibrant cities filled with modern attractions and history.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="750">
+            <div class="image">
+                <img src="images/des-5.jpg" alt="Desert dunes at sunset" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Desert Safari</h3>
+                <p>Journey through vast deserts and witness stunning sunset views.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="900">
+            <div class="image">
+                <img src="images/des-6.jpg" alt="Lush green forest" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Forest Trekking</h3>
+                <p>Explore dense forests and discover exotic wildlife in natural habitat.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="1150">
+            <div class="image">
+                <img src="images/des-7.jpg" alt="Tropical islands from above" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Island Hopping</h3>
+                <p>Visit multiple tropical islands with unique charm and beauty.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="1300">
+            <div class="image">
+                <img src="images/des-8.jpg" alt="Snowy arctic landscape" loading="lazy">
+            </div>
+            <div class="content">
+                <h3>Arctic Adventures</h3>
+                <p>Witness northern lights and experience arctic wilderness firsthand.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>`;
+    },
+
+    createServices() {
+        return `
+<section class="services" id="services">
+    <div class="heading">
+        <span>our services</span>
+        <h1>countless expericences</h1>
+    </div>
+    <div class="box-container">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-globe"></i>
+            <h3>worldwide</h3>
+            <p>Travel to any destination across the globe with our extensive network.</p>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+            <i class="fas fa-hiking"></i>
+            <h3>adventures</h3>
+            <p>Thrilling outdoor activities and extreme sports for adrenaline seekers.</p>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+            <i class="fas fa-utensils"></i>
+            <h3>food & drinks</h3>
+            <p>Savor authentic local cuisine and beverages at every destination.</p>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="600">
+            <i class="fas fa-hotel"></i>
+            <h3>affordable hotels</h3>
+            <p>Comfortable accommodations that fit your budget without compromising quality.</p>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="750">
+            <i class="fas fa-wallet"></i>
+            <h3>affordable price</h3>
+            <p>Best value packages with transparent pricing and no hidden costs.</p>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="900">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 support</h3>
+            <p>Round-the-clock customer assistance for all your travel needs.</p>
+        </div>
+    </div>
+</section>`;
+    },
+
+    createGallery() {
+        return `
+<section class="gallery" id="gallery">
+    <div class="heading">
+        <span>our gallery</span>
+        <h1>we record memories</h1>
+    </div>
+    <div class="box-container">
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Iceland">
+            <img src="images/gallery-img-1.jpg" alt="Travel photo of Iceland" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>iceland</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Greenland">
+            <img src="images/gallery-img-2.jpg" alt="Travel photo of Greenland" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>greenland</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Alaska">
+            <img src="images/gallery-img-3.jpg" alt="Travel photo of Alaska" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>alaska</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Thailand">
+            <img src="images/gallery-img-4.jpg" alt="Travel photo of Thailand" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>thailand</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Brazil">
+            <img src="images/gallery-img-5.jpg" alt="Travel photo of Brazil" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>brazil</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Maldives">
+            <img src="images/gallery-img-6.jpg" alt="Travel photo of Maldives" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>maldive</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150" tabindex="0" role="button" aria-label="View image of Iceland">
+            <img src="images/gallery-img-7.jpg" alt="Travel photo of Iceland" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>iceland</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300" tabindex="0" role="button" aria-label="View image of Alaska">
+            <img src="images/gallery-img-8.jpg" alt="Travel photo of Alaska" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>alaska</h3>
+        </div>
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450" tabindex="0" role="button" aria-label="View image of Maldives">
+            <img src="images/gallery-img-9.jpg" alt="Travel photo of Maldives" loading="lazy">
+            <span><i class="fas fa-map-marker-alt"></i> travel spot</span>
+            <h3>maldive</h3>
+        </div>
+    </div>
+</section>`;
+    },
+
+    createReview() {
+        return `
+<section class="review" id="review">
+    <div class="content" data-aos="fade-right" data-aos-delay="300">
+        <span>testimonials</span>
+        <h3>good news from our clients</h3>
+        <p>Our clients consistently share amazing experiences from their travels with us. Their feedback motivates us to continue providing exceptional service and unforgettable journeys. Here's what some of our happy travelers have to say about their adventures.</p>
+    </div>
+    <div class="review-slider" data-aos="fade-left" data-aos-delay="600">
+        <div class="slider-wrapper">
+            <div class="box-container">
+                <div class="box">
+                    <p>Amazing trip to Iceland! The northern lights tour exceeded all expectations.</p>
+                    <div class="user">
+                        <img src="images/pic-1.png" alt="User photo" loading="lazy">
+                        <div class="info">
+                            <h3>Sarah Johnson</h3>
+                            <span>Photographer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <p>Perfect beach vacation in Maldives. Crystal clear waters and excellent service!</p>
+                    <div class="user">
+                        <img src="images/pic-2.png" alt="User photo" loading="lazy">
+                        <div class="info">
+                            <h3>Mike Wilson</h3>
+                            <span>Business Owner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <p>The mountain trekking adventure was absolutely thrilling. Highly recommend!</p>
+                    <div class="user">
+                        <img src="images/pic-3.png" alt="User photo" loading="lazy">
+                        <div class="info">
+                            <h3>Emily Davis</h3>
+                            <span>Adventure Enthusiast</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <p>Cultural tour of Thailand was enriching. Learned so much about local traditions.</p>
+                    <div class="user">
+                        <img src="images/pic-4.png" alt="User photo" loading="lazy">
+                        <div class="info">
+                            <h3>David Chen</h3>
+                            <span>Teacher</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button id="prev-review" class="slider-btn" aria-label="Previous review"><i class="fas fa-chevron-left"></i></button>
+            <button id="next-review" class="slider-btn" aria-label="Next review"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>`;
+    },
+
+    createBlogs() {
+        return `
+<section class="blogs" id="blogs">
+    <div class="heading">
+        <span>blogs & posts</span>
+        <h1>we untold stories</h1>
+    </div>
+    <div class="box-container">
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <div class="image">
+                <img src="images/blog-1.jpg" alt="Camera on a map" loading="lazy">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Best Travel Photography Tips for Beginners</a>
+                <p>Discover essential techniques to capture stunning travel photos and preserve your memories forever.</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 15th Sept, 2025</a>
+                    <a href="#"><i class="fas fa-user"></i> by Tanmay</a>
+                </div>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <div class="image">
+                <img src="images/blog-2.jpg" alt="Person looking at a mountain view" loading="lazy">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Ultimate Guide to Solo Travel Adventures</a>
+                <p>Essential tips and safety advice for making the most of your solo travel experiences.</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 10th Sept, 2025</a>
+                    <a href="#"><i class="fas fa-user"></i> by Tanmay</a>
+                </div>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <div class="image">
+                <img src="images/blog-3.jpg" alt="Cobblestone street in an old town" loading="lazy">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Hidden Gems: Unexplored Destinations Worth Visiting</a>
+                <p>Discover off-the-beaten-path locations that offer unique cultural and natural experiences.</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 5th Sept, 2025</a>
+                    <a href="#"><i class="fas fa-user"></i> by Tanmay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>`;
+    },
+
+    createBanner() {
+        return `
+<div class="banner">
+    <div class="content" data-aos="zoom-in-up" data-aos-delay="300">
+        <span>start your adventures</span>
+        <h3>Let's Explore This World</h3>
+        <p>Don't wait for tomorrow to chase your dreams. Pack your bags, embrace the adventure, and create memories that will last a lifetime. The world is calling!</p>
+        <a href="#book-form" class="btn">book now</a>
+    </div>
+</div>`;
+    },
+
+    createFooter() {
+        return `
+<section class="footer">
+    <div class="box-container">
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <a href="#home" class="logo"> <i class="fas fa-paper-plane"></i>travel </a>
+            <p>Your trusted travel companion for unforgettable adventures and seamless journeys worldwide.</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f" aria-label="Facebook" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-twitter" aria-label="Twitter" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"></a>
+                <a href="#" class="fab fa-linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <h3>quick links</h3>
+            <a href="#home" class="links"> <i class="fas fa-arrow-right"></i> home </a>
+            <a href="#about" class="links"> <i class="fas fa-arrow-right"></i> about </a>
+            <a href="#destination" class="links"> <i class="fas fa-arrow-right"></i> destination </a>
+            <a href="#services" class="links"> <i class="fas fa-arrow-right"></i> services </a>
+            <a href="#gallery" class="links"> <i class="fas fa-arrow-right"></i> gallery </a>
+            <a href="#blogs" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <h3>contact info</h3>
+            <p> <i class="fas fa-map"></i> Uttar Pradesh, india </p>
+            <p> <i class="fas fa-phone"></i> +91 6394729329 </p>
+            <p> <i class="fas fa-envelope"></i> yashsrivastava561@gmail.com </p>
+            <p> <i class="fas fa-clock"></i> 7:00am - 10:00pm </p>
+        </div>
+        <div class="box" data-aos="fade-up" data-aos-delay="600">
+            <h3><i class="fas fa-envelope-open-text"></i> newsletter</h3>
+            <p>subscribe for latest updates</p>
+            <form action="" id="newsletter-form">
+                <input type="email" name="email" placeholder="enter your email" class="email" id="newsletter-email" required>
+                <button type="submit" class="btn">subscribe <i class="fas fa-paper-plane"></i></button>
+                <div class="form-message"></div>
+            </form>
+        </div>
+    </div>
+</section>
+<div class="credit">created by <span>mr. Tanmay Srivastava </span> | all rights reserved!</div>`;
+    },
+
+    createScrollTopButton() {
+        return `<a href="#home" class="scroll-top-btn fas fa-arrow-up"></a>`;
+    },
+
+    createLightbox() {
+        return `
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-heading">
+    <h2 id="lightbox-heading" class="visually-hidden">Image Gallery</h2>
+    <span class="close-btn" role="button" tabindex="0" aria-label="Close gallery">&times;</span>
+    <img src="" alt="Enlarged gallery image" class="lightbox-content" id="lightbox-img">
+</div>`;
+    },
+
+    createPageStructure() {
+        return `
+            ${this.createHeader()}
+            <main>
+                ${this.createHome()}
+                ${this.createBookingForm()}
+                ${this.createAbout()}
+                ${this.createDestination()}
+                ${this.createServices()}
+                ${this.createGallery()}
+                ${this.createReview()}
+                ${this.createBlogs()}
+                ${this.createBanner()}
+            </main>
+            ${this.createFooter()}
+            ${this.createScrollTopButton()}
+            ${this.createLightbox()}
+        `;
+    }
+};
+
+
+
+
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +486,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize all interactive components
     const app = {
+        render() {
+            const appContainer = document.getElementById('app');
+            if (appContainer && typeof templates !== 'undefined') {
+                appContainer.innerHTML = templates.createPageStructure();
+            } else {
+                console.error('App container or templates object not found!');
+                document.body.innerHTML = '<h1 style="color: red; text-align: center; margin-top: 50px;">Error: Could not load page content.</h1>';
+            }
+        },
+
         init() {
+            this.render();
             this.initAOS();
             this.initNavbar();
             this.initScrollEffects();
