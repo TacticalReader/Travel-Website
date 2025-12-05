@@ -6,7 +6,7 @@ A visually engaging and responsive travel-themed single-page website built with 
 ## 🌎 Live Demo
 
 Experience the site:  
-[tacticalreader.github.io/Travel-Website/Travel-Website/](https://tacticalreader.github.io/Travel-Website/Travel-Website/)[1]
+[tacticalreader.github.io/Travel-Website/Travel-Website/](https://tacticalreader.github.io/Travel-Website)[1]
 
 ***
 
@@ -91,6 +91,7 @@ This project is licensed under the [Apache 2.0 License](https://github.com/Tacti
 ***
 
 **Made by Tanmay Srivastava | For demo and educational purposes** [2][1]
+***AOS LIBRARY WAS USED IN THIS **
 
 ***
 
